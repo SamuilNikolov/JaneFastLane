@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Jane-Fast-Lane.props" />
+</Project>
