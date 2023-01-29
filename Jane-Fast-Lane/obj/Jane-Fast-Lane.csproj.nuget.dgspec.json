@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\source\\repos\\Jane-Fast-Lane\\Jane-Fast-Lane\\Jane-Fast-Lane.csproj": {}
+    "C:\\Users\\user\\source\\repos\\Jane-Fast-Lane\\JaneFastLane\\Jane-Fast-Lane\\Jane-Fast-Lane.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\source\\repos\\Jane-Fast-Lane\\Jane-Fast-Lane\\Jane-Fast-Lane.csproj": {
+    "C:\\Users\\user\\source\\repos\\Jane-Fast-Lane\\JaneFastLane\\Jane-Fast-Lane\\Jane-Fast-Lane.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\source\\repos\\Jane-Fast-Lane\\Jane-Fast-Lane\\Jane-Fast-Lane.csproj",
+        "projectUniqueName": "C:\\Users\\user\\source\\repos\\Jane-Fast-Lane\\JaneFastLane\\Jane-Fast-Lane\\Jane-Fast-Lane.csproj",
         "projectName": "Jane-Fast-Lane",
-        "projectPath": "C:\\Users\\user\\source\\repos\\Jane-Fast-Lane\\Jane-Fast-Lane\\Jane-Fast-Lane.csproj",
+        "projectPath": "C:\\Users\\user\\source\\repos\\Jane-Fast-Lane\\JaneFastLane\\Jane-Fast-Lane\\Jane-Fast-Lane.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\source\\repos\\Jane-Fast-Lane\\Jane-Fast-Lane\\obj\\",
+        "outputPath": "C:\\Users\\user\\source\\repos\\Jane-Fast-Lane\\JaneFastLane\\Jane-Fast-Lane\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

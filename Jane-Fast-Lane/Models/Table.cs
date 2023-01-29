@@ -19,5 +19,7 @@ namespace Jane_Fast_Lane.Models
         [Display(Name = "Характеристики")]
         public string Characteristics { get; set; }
 
+        public int SeatsTaken { get; set; }
+
     }
 }
