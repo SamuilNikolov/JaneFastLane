@@ -9,9 +9,13 @@ namespace Jane_Fast_Lane.Models
 
         [RegularExpression(@"^[A-Za-z\s]{2,50}$", ErrorMessage = "От 2 до 50 латински букви с или без интервали.")]
         public string Name { get; set; }
-
-        public string Client { get; set; }
-
-        public List<Menu> orderContent { get; set; }
+        public string ClientId { get; set; }
+        public string WaiterId { get; set; }
+        public IEnumerable<Menu> orderContent { get; set; }
+        public Table Table { get; set; }
+        public DateTime OrderDate { get; set; }
+        public DateTime CompletionDate { get; set; }
+        public int RatingFood { get; set; }
+        public int RatingWaiter { get; set; }
     }
 }

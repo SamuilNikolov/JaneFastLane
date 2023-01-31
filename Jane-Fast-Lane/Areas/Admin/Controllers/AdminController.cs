@@ -1,21 +1,26 @@
-﻿using Jane_Fast_Lane.Models;
+﻿using Jane_Fast_Lane.Data;
+using Jane_Fast_Lane.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jane_Fast_Lane.Areas.Admin.Controllers
 {
     public class AdminController : BaseController
     {
 
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly UserManager<ApplicationUser> userManager; 
+        private readonly ApplicationDbContext _context;
+
         public IActionResult AdminPanel()
         {
             var users = userManager.Users;
             return View(users);
         }
-        public AdminController(UserManager<ApplicationUser> _userManager)
+        public AdminController(UserManager<ApplicationUser> _userManager, ApplicationDbContext context)
         {
             userManager = _userManager;
+            _context = context;
         }
 
         public async Task<IActionResult> AssignWaiter(string id)

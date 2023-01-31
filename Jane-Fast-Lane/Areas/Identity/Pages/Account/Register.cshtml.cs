@@ -144,8 +144,8 @@ namespace Jane_Fast_Lane.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, "Customer");
                         user.Role = "Customer";
+                        await _userManager.AddToRoleAsync(user, "Customer");
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }

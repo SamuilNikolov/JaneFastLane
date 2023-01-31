@@ -121,6 +121,9 @@ namespace Jane_Fast_Lane.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -148,6 +151,8 @@ namespace Jane_Fast_Lane.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("OrderId");
 
                     b.ToTable("Menu");
@@ -161,15 +166,36 @@ namespace Jane_Fast_Lane.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Client")
+                    b.Property<string>("ClientId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CompletionDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RatingFood")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RatingWaiter")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TableId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WaiterId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TableId");
 
                     b.ToTable("Order");
                 });
@@ -193,15 +219,25 @@ namespace Jane_Fast_Lane.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
                     b.Property<int>("SeatsTaken")
                         .HasColumnType("int");
 
+                    b.Property<string>("WaiterId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("WaiterId");
 
                     b.ToTable("Table");
                 });
@@ -345,9 +381,24 @@ namespace Jane_Fast_Lane.Data.Migrations
 
             modelBuilder.Entity("Jane_Fast_Lane.Models.Menu", b =>
                 {
+                    b.HasOne("Jane_Fast_Lane.Models.ApplicationUser", null)
+                        .WithMany("CartItems")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("Jane_Fast_Lane.Models.Order", null)
                         .WithMany("orderContent")
                         .HasForeignKey("OrderId");
+                });
+
+            modelBuilder.Entity("Jane_Fast_Lane.Models.Order", b =>
+                {
+                    b.HasOne("Jane_Fast_Lane.Models.Table", "Table")
+                        .WithMany()
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Table");
                 });
 
             modelBuilder.Entity("Jane_Fast_Lane.Models.Table", b =>
@@ -355,6 +406,18 @@ namespace Jane_Fast_Lane.Data.Migrations
                     b.HasOne("Jane_Fast_Lane.Models.ApplicationUser", null)
                         .WithMany("Table")
                         .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("Jane_Fast_Lane.Models.ApplicationUser", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("Jane_Fast_Lane.Models.ApplicationUser", "Waiter")
+                        .WithMany()
+                        .HasForeignKey("WaiterId");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Waiter");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -410,6 +473,8 @@ namespace Jane_Fast_Lane.Data.Migrations
 
             modelBuilder.Entity("Jane_Fast_Lane.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("CartItems");
+
                     b.Navigation("Table");
                 });
 
