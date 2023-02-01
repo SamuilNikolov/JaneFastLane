@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Administration Panel";
+}
+@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<ApplicationUser>
+<style>
+
+</style>
+<table class="table table-striped" style="margin-top:110px;">
+  <caption>Team Information</caption>
+  <thead>
+    <tr class="thead">
+      <th scope="col">Потребител (Име)</th>
+      <th scope="col">Роля</th>
+      <th scope="col">Добави роля "Потребител"</th>
+      <th scope="col">Премахни роля "Потребител"</th>
+      <th scope="col">Добави роля "Сервитьор"</th>
+      <th scope="col">Премахни роля "Сервитьор"</th>
+      <th scope="col">Добави роля "Администратор"</th>
+      <th scope="col">Премахни роля "Администратор"</th>
+    </tr>
+  </thead>
+  <tbody>
+
+        @if (Model.Any()){
+    foreach(var user in Model)
+    {
+        
+    <tr>
+
+      <td>@user.UserName</td>
+      <td>@user.Role</td>
+      <td><a asp-action="AssignCustomer" asp-route-id="@user.Id" asp-controller="Admin">Направете потребител</a></td>
+      <td><a asp-action="RemoveCustomer" asp-route-id="@user.Id" asp-controller="Admin">Премахнете роля потребител</a></td>
+      <td><a asp-action="AssignWaiter" asp-route-id="@user.Id" asp-controller="Admin">Направете сервитьор</a></td>
+      <td><a asp-action="RemoveWaiter" asp-route-id="@user.Id" asp-controller="Admin">Премахнете роля сервитьор</a></td>
+      <td><a asp-action="AssignAdmin" asp-route-id="@user.Id" asp-controller="Admin">Направете администратор</a></td>
+      <td><a asp-action="RemoveAdmin" asp-route-id="@user.Id" asp-controller="Admin">Премахнете роля администратор</a></td>
+    </tr>
+    }
+}
+
+    </tbody>
+</table>

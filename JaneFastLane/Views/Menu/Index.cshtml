@@ -1,0 +1,324 @@
+﻿@model IEnumerable<JaneFastLane.Models.Menu>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<section id="menu" class="menu">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+            <p>НАШЕТО <span>МЕНЮ</span></p>
+        </div>
+
+        <ul class="nav nav-tabs d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
+
+            <li class="nav-item">
+                <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-salata">
+                    <h4>Салата</h4>
+                </a>
+            </li><!-- End tab nav item -->
+
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-predqstie">
+                    <h4>Предястие</h4>
+                </a><!-- End tab nav item -->
+
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-osnovno">
+                    <h4>Основно ястие</h4>
+                </a>
+            </li><!-- End tab nav item -->
+
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-bbq">
+                    <h4>Барбекю</h4>
+                </a>
+            </li><!-- End tab nav item -->
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-pizza">
+                    <h4>Пица</h4>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-rizoto">
+                    <h4>Ризото</h4>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-pasta">
+                    <h4>Паста</h4>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dessert">
+                    <h4>Десерт</h4>
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content" data-aos="fade-up" data-aos-delay="300">
+
+            <div class="tab-pane fade active show" id="menu-salata">
+
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Салата</h3>
+                </div>
+
+                <div class="row gy-5">
+
+                    @foreach (var item in Model)
+                    {
+                        if(item.Category.Name == "Салата"){
+
+                            <div class="col-lg-4 menu-item">
+                                <a href="/Menu/Details/@item.Id"><img src="@Html.DisplayFor(modelItem => item.Image)" class="menu-img img-fluid" alt=""></a>
+                                <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+                                <p class="ingredients">
+                                    @Html.DisplayFor(modelItem => item.Summary)
+                                </p>
+                                <p class="price">
+                                    @Html.DisplayFor(modelItem => item.Price) лв.
+                                </p>
+                                <p class="price">
+                                    Категория: @Html.DisplayFor(modelItem => item.Category.Name)
+                                </p>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="menu-predqstie">
+
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Предястие</h3>
+                </div>
+
+                <div class="row gy-5">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.Category.Name == "Предястие")
+                        {
+
+                            <div class="col-lg-4 menu-item">
+                                <a href="/Menu/Details/@item.Id"><img src="@Html.DisplayFor(modelItem => item.Image)" class="menu-img img-fluid" alt=""></a>
+                                <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+                                <p class="ingredients">
+                                    @Html.DisplayFor(modelItem => item.Summary)
+                                </p>
+                                <p class="price">
+                                    @Html.DisplayFor(modelItem => item.Price) лв.
+                                </p>
+                                <p class="price">
+                                    Категория: @Html.DisplayFor(modelItem => item.Category.Name)
+                                </p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="menu-osnovno">
+
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Основно ястие</h3>
+                </div>
+
+                <div class="row gy-5">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.Category.Name == "Основно ястие")
+                        {
+
+                            <div class="col-lg-4 menu-item">
+                                <a href="/Menu/Details/@item.Id"><img src="@Html.DisplayFor(modelItem => item.Image)" class="menu-img img-fluid" alt=""></a>
+                                <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+                                <p class="ingredients">
+                                    @Html.DisplayFor(modelItem => item.Summary)
+                                </p>
+                                <p class="price">
+                                    @Html.DisplayFor(modelItem => item.Price) лв.
+                                </p>
+                                <p class="price">
+                                    Категория: @Html.DisplayFor(modelItem => item.Category.Name)
+                                </p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade" id="menu-bbq">
+
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Барбекю</h3>
+                </div>
+
+                <div class="row gy-5">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.Category.Name == "Барбекю")
+                        {
+
+                            <div class="col-lg-4 menu-item">
+                                <a href="/Menu/Details/@item.Id"><img src="@Html.DisplayFor(modelItem => item.Image)" class="menu-img img-fluid" alt=""></a>
+                                <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+                                <p class="ingredients">
+                                    @Html.DisplayFor(modelItem => item.Summary)
+                                </p>
+                                <p class="price">
+                                    @Html.DisplayFor(modelItem => item.Price) лв.
+                                </p>
+                                <p class="price">
+                                    Категория: @Html.DisplayFor(modelItem => item.Category.Name)
+                                </p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade" id="menu-pizza">
+
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Пица</h3>
+                </div>
+
+                <div class="row gy-5">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.Category.Name == "Пица")
+                        {
+
+                            <div class="col-lg-4 menu-item">
+                                <a href="/Menu/Details/@item.Id"><img src="@Html.DisplayFor(modelItem => item.Image)" class="menu-img img-fluid" alt=""></a>
+                                <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+                                <p class="ingredients">
+                                    @Html.DisplayFor(modelItem => item.Summary)
+                                </p>
+                                <p class="price">
+                                    @Html.DisplayFor(modelItem => item.Price) лв.
+                                </p>
+                                <p class="price">
+                                    Категория: @Html.DisplayFor(modelItem => item.Category.Name)
+                                </p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="menu-rizoto">
+
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Ризото</h3>
+                </div>
+
+                <div class="row gy-5">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.Category.Name == "Ризото")
+                        {
+
+                            <div class="col-lg-4 menu-item">
+                                <a href="/Menu/Details/@item.Id"><img src="@Html.DisplayFor(modelItem => item.Image)" class="menu-img img-fluid" alt=""></a>
+                                <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+                                <p class="ingredients">
+                                    @Html.DisplayFor(modelItem => item.Summary)
+                                </p>
+                                <p class="price">
+                                    @Html.DisplayFor(modelItem => item.Price) лв.
+                                </p>
+                                <p class="price">
+                                    Категория: @Html.DisplayFor(modelItem => item.Category.Name)
+                                </p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="menu-pasta">
+
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Паста</h3>
+                </div>
+
+                <div class="row gy-5">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.Category.Name == "Паста")
+                        {
+
+                            <div class="col-lg-4 menu-item">
+                                <a href="/Menu/Details/@item.Id"><img src="@Html.DisplayFor(modelItem => item.Image)" class="menu-img img-fluid" alt=""></a>
+                                <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+                                <p class="ingredients">
+                                    @Html.DisplayFor(modelItem => item.Summary)
+                                </p>
+                                <p class="price">
+                                    @Html.DisplayFor(modelItem => item.Price) лв.
+                                </p>
+                                <p class="price">
+                                    Категория: @Html.DisplayFor(modelItem => item.Category.Name)
+                                </p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="menu-dessert">
+
+                <div class="tab-header text-center">
+                    <p>Menu</p>
+                    <h3>Десерт</h3>
+                </div>
+
+                <div class="row gy-5">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.Category.Name == "Десерт")
+                        {
+
+                            <div class="col-lg-4 menu-item">
+                                <a href="/Menu/Details/@item.Id"><img src="@Html.DisplayFor(modelItem => item.Image)" class="menu-img img-fluid" alt=""></a>
+                                <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+                                <p class="ingredients">
+                                    @Html.DisplayFor(modelItem => item.Summary)
+                                </p>
+                                <p class="price">
+                                    @Html.DisplayFor(modelItem => item.Price) лв.
+                                </p>
+                                <p class="price">
+                                    Категория: @Html.DisplayFor(modelItem => item.Category.Name)
+                                </p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div><!-- End Breakfast Menu Content -->
+            <!-- End Starter Menu Content -->
+
+        </div>
+        <h1>Добавете към менюто </h1><a asp-action="Create">тук</a>
+
+    </div>
+
+</section>
