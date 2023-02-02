@@ -13,6 +13,8 @@ namespace JaneFastLane.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Role { get; set; }
-        public IEnumerable<Table>? Table { get; set; }
+        public IEnumerable<Table>? TablesWaiter { get; set; }
+        public int? TableCustomerId { get; set; }
+        public Table? TableCustomer { get; set; }
     }
 }

@@ -8,24 +8,60 @@ using Microsoft.EntityFrameworkCore;
 using JaneFastLane.Data;
 using JaneFastLane.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace JaneFastLane.Controllers
 {
     public class TableController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        private readonly RoleManager<IdentityRole> _roleManager;
-        public TableController(ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
+        public TableController(ApplicationDbContext context, UserManager<ApplicationUser> _userManager)
         {
             _context = context;
-            _roleManager = roleManager;
+            userManager = _userManager;
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> SitOnTable(int id)
+        {
+            var table = await _context.Table
+                .Include(t => t.Waiter)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await userManager.FindByIdAsync(userId);
+            table.Customers.Append(user);
+            user.TableCustomer = table;
+            table.SeatsTaken++;
+            await _context.SaveChangesAsync();
+
+            var applicationDbContext = _context.Table.Include(t => t.Waiter);
+            return RedirectToAction("Index", "Customer");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LeaveTable(int id)
+        {
+            var table = await _context.Table
+                .Include(t => t.Waiter)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await userManager.FindByIdAsync(userId);
+            table.Customers = table.Customers.Where(t => t.Id != userId);
+            user.TableCustomer = null;
+            table.SeatsTaken--;
+            await _context.SaveChangesAsync();
+
+            var applicationDbContext = _context.Table.Include(t => t.Waiter);
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Table
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Table.Include(t => t.Customer).Include(t => t.Waiter);
+            var applicationDbContext = _context.Table.Include(t => t.Waiter);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -38,7 +74,6 @@ namespace JaneFastLane.Controllers
             }
 
             var table = await _context.Table
-                .Include(t => t.Customer)
                 .Include(t => t.Waiter)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (table == null)
@@ -52,7 +87,7 @@ namespace JaneFastLane.Controllers
         // GET: Table/Create
         public IActionResult Create()
         {
-            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>().Where(x => x.Role == "Waiter"), "Id", "UserName");
+            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
             return View();
         }
 
@@ -69,7 +104,7 @@ namespace JaneFastLane.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>().Where(x => x.Role == "Waiter"), "Id", "UserName", table.WaiterId);
+            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", table.WaiterId);
             return View(table);
         }
 
@@ -86,7 +121,7 @@ namespace JaneFastLane.Controllers
             {
                 return NotFound();
             }
-            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>().Where(x => x.Role == "Waiter"), "Id", "UserName", table.WaiterId);
+            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", table.WaiterId);
             return View(table);
         }
 
@@ -122,7 +157,7 @@ namespace JaneFastLane.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>().Where(x => x.Role == "Waiter"), "Id", "UserName", table.WaiterId);
+            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", table.WaiterId);
             return View(table);
         }
 
@@ -135,7 +170,6 @@ namespace JaneFastLane.Controllers
             }
 
             var table = await _context.Table
-                .Include(t => t.Customer)
                 .Include(t => t.Waiter)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (table == null)

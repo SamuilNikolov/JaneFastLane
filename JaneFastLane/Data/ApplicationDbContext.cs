@@ -21,9 +21,10 @@ namespace JaneFastLane.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<ApplicationUser>().HasMany(u => u.Table);
+            builder.Entity<ApplicationUser>().HasMany(u => u.TablesWaiter);
+            builder.Entity<ApplicationUser>().HasOne(u => u.TableCustomer);
             builder.Entity<Table>().HasOne(u => u.Waiter);
-            builder.Entity<Table>().HasOne(u => u.Customer);
+            builder.Entity<Table>().HasMany(u => u.Customers);
 
             base.OnModelCreating(builder);
         }

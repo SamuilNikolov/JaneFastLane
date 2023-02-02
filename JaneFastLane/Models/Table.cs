@@ -9,6 +9,10 @@ namespace JaneFastLane.Models
 {
     public class Table
     {
+        public Table()
+        {
+            this.Customers = new HashSet<ApplicationUser>();
+        }
         public int Id { get; set; }
 
         [Display(Name = "Номер")]
@@ -18,8 +22,7 @@ namespace JaneFastLane.Models
         [Display(Name = "Характеристики")]
         public string Characteristics { get; set; }
         public int SeatsTaken { get; set; }
-        public string? CustomerId { get; set; }
-        public ApplicationUser? Customer { get; set; }
+        public IEnumerable<ApplicationUser>? Customers { get; set; }
         public string? WaiterId { get; set; }
         public ApplicationUser? Waiter { get; set; }
     }

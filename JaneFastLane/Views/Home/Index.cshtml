@@ -28,19 +28,33 @@
 
             <div class="col-lg-8 d-flex align-items-center">
                 <div class="row gy-4">
-
                     @if (User.IsInRole("Customer"))
                     {
-                        foreach (var item in Model)
+                        @if (ViewBag.Customer.TableCustomerId != null)
                         {
-                            <div class="col-xl-4" data-aos="fade-up" data-aos-delay="200">
-                                <div class="icon-box d-flex flex-column justify-content-center align-items-center">
-                                    <i class="fa-solid fa-utensils"></i>
-                                    <h4>Маса номер №@item.Number (@item.Characteristics)</h4>
-                                    <p>Заети места @item.SeatsTaken/@item.Capacity</p>
-                                    <p>Отговорен сервитьор: @item.Waiter.UserName</p>
-                                </div>
+                            <h1>В момента сте седнали на маса №@ViewBag.Table.Number</h1>
+                            <h4><a asp-action="LeaveTable" asp-controller="Table" asp-route-id="@ViewBag.Customer.TableCustomerId">Ако искате да изберете друга маса или да напуснете тази, натиснете тук</a></h4>
+                            <div class="hero" style="min-height:0px; padding:0px;">
+                                <a asp-action="Index" asp-controller="Customer" class="btn-book-a-table">Меню</a>
                             </div>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <div class="col-xl-4" data-aos="fade-up" data-aos-delay="200">
+                                    <div class="icon-box d-flex flex-column justify-content-center align-items-center">
+                                        <i class="fa-solid fa-utensils"></i>
+                                        <h4>Маса номер №@item.Number (@item.Characteristics)</h4>
+                                        <p>Заети места @item.SeatsTaken/@item.Capacity</p>
+                                        <p>Отговорен сервитьор: @item.Waiter.UserName</p>
+                                        @if (@item.SeatsTaken < int.Parse(@item.Capacity))
+                                        {
+                                            <a asp-action="SitOnTable" asp-controller="Table" asp-route-id="@item.Id">Седнете на масата</a>
+                                        }
+                                    </div>
+                                </div>
+                            }
                         }
                     }
 
