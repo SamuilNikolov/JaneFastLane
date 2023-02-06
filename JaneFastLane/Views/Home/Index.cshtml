@@ -23,11 +23,11 @@
 <section id="why-us" class="why-us section-bg">
     <div class="container" data-aos="fade-up">
 
-        <div class="row gy-4">
+        <div class="row">
 
 
-            <div class="col-lg-8 d-flex align-items-center">
-                <div class="row gy-4">
+            <div class="align-items-center">
+                <div class="row">
                     @if (User.IsInRole("Customer"))
                     {
                         @if (ViewBag.Customer.TableCustomerId != null)
@@ -42,15 +42,19 @@
                         {
                             foreach (var item in Model)
                             {
-                                <div class="col-xl-4" data-aos="fade-up" data-aos-delay="200">
+                                <div data-aos="fade-up" data-aos-delay="200" class="col-lg-4">
                                     <div class="icon-box d-flex flex-column justify-content-center align-items-center">
                                         <i class="fa-solid fa-utensils"></i>
-                                        <h4>Маса номер №@item.Number (@item.Characteristics)</h4>
+                                        <h4>Маса номер №@item.Number (@item.Characteristics.Characteristic)</h4>
                                         <p>Заети места @item.SeatsTaken/@item.Capacity</p>
                                         <p>Отговорен сервитьор: @item.Waiter.UserName</p>
                                         @if (@item.SeatsTaken < int.Parse(@item.Capacity))
                                         {
                                             <a asp-action="SitOnTable" asp-controller="Table" asp-route-id="@item.Id">Седнете на масата</a>
+                                        }
+                                        else
+                                        {
+                                         <p style="color:red">Може да седнете на масата, когато се освободят места</p>
                                         }
                                     </div>
                                 </div>

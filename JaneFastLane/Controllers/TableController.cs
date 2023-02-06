@@ -61,7 +61,8 @@ namespace JaneFastLane.Controllers
         // GET: Table
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Table.Include(t => t.Waiter);
+            var applicationDbContext = _context.Table.Include(t => t.Waiter)
+                .Include(t => t.Characteristics);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -74,6 +75,7 @@ namespace JaneFastLane.Controllers
             }
 
             var table = await _context.Table
+                .Include(t => t.Characteristics)
                 .Include(t => t.Waiter)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (table == null)
@@ -87,7 +89,8 @@ namespace JaneFastLane.Controllers
         // GET: Table/Create
         public IActionResult Create()
         {
-            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            ViewData["CharacteristicsId"] = new SelectList(_context.Set<Characteristics>(), "Id", "Characteristic");
+            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "UserName");
             return View();
         }
 
@@ -96,7 +99,7 @@ namespace JaneFastLane.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Number,Capacity,Characteristics,SeatsTaken,WaiterId")] Table table)
+        public async Task<IActionResult> Create([Bind("Id,Number,Capacity,CharacteristicsId,SeatsTaken,WaiterId")] Table table)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +107,8 @@ namespace JaneFastLane.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", table.WaiterId);
+            ViewData["CharacteristicsId"] = new SelectList(_context.Set<Characteristics>(), "Id", "Characteristic", table.CharacteristicsId);
+            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "UserName", table.WaiterId);
             return View(table);
         }
 
@@ -121,7 +125,8 @@ namespace JaneFastLane.Controllers
             {
                 return NotFound();
             }
-            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", table.WaiterId);
+            ViewData["CharacteristicsId"] = new SelectList(_context.Set<Characteristics>(), "Id", "Characteristic", table.CharacteristicsId);
+            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "UserName", table.WaiterId);
             return View(table);
         }
 
@@ -130,7 +135,7 @@ namespace JaneFastLane.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Number,Capacity,Characteristics,SeatsTaken,WaiterId")] Table table)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Number,Capacity,CharacteristicsId,SeatsTaken,WaiterId")] Table table)
         {
             if (id != table.Id)
             {
@@ -157,7 +162,8 @@ namespace JaneFastLane.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", table.WaiterId);
+            ViewData["CharacteristicsId"] = new SelectList(_context.Set<Characteristics>(), "Id", "Characteristic", table.CharacteristicsId);
+            ViewData["WaiterId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "UserName", table.WaiterId);
             return View(table);
         }
 

@@ -1,0 +1,91 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<section class="menu">
+    <div class="row text-center">
+
+        <h1>Направени поръчки</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Дата на поръчване
+                    </th>
+                    <th>
+                        Дата на получаване
+                    </th>
+                    <th>
+                        Съдържание
+                    </th>
+                    <th>
+                        Маса
+                    </th>
+                    <th>
+                        Статус
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tuple in ViewBag.OrdersAndContents)
+                {
+
+
+                    <tr>
+                        <td>
+                            @tuple.Item1.OrderDate
+                        </td>
+
+                        @if (@tuple.Item1.CompletionDate == null)
+                        {
+
+                            <td>
+                                Очаква се
+                            </td>
+                        }
+                        else
+                        {
+
+                            <td>
+                                @tuple.Item1.CompletionDate
+                            </td>
+                        }
+                        <td>
+                            @foreach (var item in tuple.Item2)
+                            {
+                                <p>@item.Name</p>
+                            }
+                        </td>
+                        <td>
+                            №@tuple.Item1.Table.Number (@tuple.Item1.Table.Characteristics.Characteristic)
+                        </td>
+                        @if (@tuple.Item1.Status == "Finished")
+                        {
+
+                            <td>
+                                Изпълнена
+                            </td>
+                        }
+                        else if (@tuple.Item1.Status == "Returned")
+                        {
+
+                            <td>
+                                Върната
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                Направена <a asp-action="RemoveOrder" asp-controller="Customer" asp-route-id="@tuple.Item1.Id">Върнете поръчката</a>
+                            </td>
+                        }
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</section>

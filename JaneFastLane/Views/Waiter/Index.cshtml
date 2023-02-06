@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<section>
+
+    <h1>Маси, за които отговаряте</h1>
+
+    @foreach (var item in ViewBag.Tables)
+    {
+        <h3>Номер: @item.Number</h3>
+        <h3>Особености: @item.Characteristics.Characteristic</h3>
+    }
+</section>
+<div class="row justify-content-center">
+
+    @foreach (var tuple in ViewBag.OrdersAndContents)
+    {
+
+        <div class="card col-lg-3">
+            <div class="card-body">
+                <h5 class="card-title">Маса №@tuple.Item1.Table.Number (@tuple.Item1.Table.Characteristics.Characteristic)</h5>
+                <p class="card-text">Поръчката е направена на @tuple.Item1.OrderDate</p>
+            </div>
+
+            <ul class="list-group list-group-flush">
+
+                @foreach (var item in tuple.Item2)
+                {
+                    <li class="list-group-item">@item.Name</li>
+
+                }
+            </ul>
+            <div class="card-body">
+                <a class="card-link"asp-action="FinishOrder" asp-controller="Waiter" asp-route-id="@tuple.Item1.Id">Изпълни</a>
+            </div>
+        </div>
+    }
+</div>

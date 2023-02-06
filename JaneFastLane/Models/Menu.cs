@@ -32,6 +32,5 @@ namespace JaneFastLane.Models
 
         public double Price { get; set; }
 
-
     }
 }

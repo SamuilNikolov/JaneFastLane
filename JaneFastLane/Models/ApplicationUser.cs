@@ -16,5 +16,7 @@ namespace JaneFastLane.Models
         public IEnumerable<Table>? TablesWaiter { get; set; }
         public int? TableCustomerId { get; set; }
         public Table? TableCustomer { get; set; }
+        public string? Cart { get; set; } = "";
+
     }
 }

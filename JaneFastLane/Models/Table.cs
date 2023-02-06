@@ -20,7 +20,8 @@ namespace JaneFastLane.Models
         [Display(Name = "Капацитет")]
         public string Capacity { get; set; }
         [Display(Name = "Характеристики")]
-        public string Characteristics { get; set; }
+        public int? CharacteristicsId { get; set; }
+        public Characteristics? Characteristics { get; set; }
         public int SeatsTaken { get; set; }
         public IEnumerable<ApplicationUser>? Customers { get; set; }
         public string? WaiterId { get; set; }

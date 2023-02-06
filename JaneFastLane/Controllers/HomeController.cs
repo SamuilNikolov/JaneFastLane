@@ -27,13 +27,18 @@ namespace JaneFastLane.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await userManager.FindByIdAsync(userId);
-            var table = await _context.Table
-                .Include(t => t.Waiter)
-                .FirstOrDefaultAsync(m => m.Id == user.TableCustomerId);
+            if (User.IsInRole("Customer"))
+            {
+
+                var table = await _context.Table
+                    .Include(t => t.Waiter)
+                    .FirstOrDefaultAsync(m => m.Id == user.TableCustomerId);
+                ViewData["Table"] = table;
+            }
             ViewData["Customer"] = user;
-            ViewData["Table"] = table;
             ViewData["Menu"] = _context.Menu.Include(m => m.Category);
-            return View(await _context.Table.Include(t => t.Waiter).ToListAsync());
+            return View(await _context.Table.Include(t => t.Waiter)
+                .Include(t => t.Characteristics).ToListAsync());
         }
 
         public IActionResult Privacy()

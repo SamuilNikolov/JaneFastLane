@@ -4,6 +4,7 @@ using JaneFastLane.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JaneFastLane.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230203093130_appuser-added-cart")]
+    partial class appuseraddedcart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,6 +66,9 @@ namespace JaneFastLane.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -87,6 +92,8 @@ namespace JaneFastLane.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Menu");
@@ -104,25 +111,21 @@ namespace JaneFastLane.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CompletionDate")
+                    b.Property<DateTime>("CompletionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("OrderContent")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("RatingFood")
+                    b.Property<int>("RatingFood")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RatingWaiter")
+                    b.Property<int>("RatingWaiter")
                         .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TableId")
                         .HasColumnType("int");
@@ -388,9 +391,6 @@ namespace JaneFastLane.Data.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("Cart")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -415,6 +415,10 @@ namespace JaneFastLane.Data.Migrations
 
             modelBuilder.Entity("JaneFastLane.Models.Menu", b =>
                 {
+                    b.HasOne("JaneFastLane.Models.ApplicationUser", null)
+                        .WithMany("Cart")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("JaneFastLane.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
@@ -525,6 +529,8 @@ namespace JaneFastLane.Data.Migrations
 
             modelBuilder.Entity("JaneFastLane.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("Cart");
+
                     b.Navigation("TablesWaiter");
                 });
 #pragma warning restore 612, 618

@@ -4,6 +4,7 @@ using JaneFastLane.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JaneFastLane.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230203084154_table-characteristics-model-relation")]
+    partial class tablecharacteristicsmodelrelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,25 +106,21 @@ namespace JaneFastLane.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CompletionDate")
+                    b.Property<DateTime>("CompletionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("OrderContent")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("RatingFood")
+                    b.Property<int>("RatingFood")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RatingWaiter")
+                    b.Property<int>("RatingWaiter")
                         .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TableId")
                         .HasColumnType("int");
@@ -153,7 +151,7 @@ namespace JaneFastLane.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CharacteristicsId")
+                    b.Property<int>("CharacteristicsId")
                         .HasColumnType("int");
 
                     b.Property<int>("Number")
@@ -388,9 +386,6 @@ namespace JaneFastLane.Data.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("Cart")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -443,7 +438,9 @@ namespace JaneFastLane.Data.Migrations
 
                     b.HasOne("JaneFastLane.Models.Characteristics", "Characteristics")
                         .WithMany()
-                        .HasForeignKey("CharacteristicsId");
+                        .HasForeignKey("CharacteristicsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("JaneFastLane.Models.ApplicationUser", "Waiter")
                         .WithMany()

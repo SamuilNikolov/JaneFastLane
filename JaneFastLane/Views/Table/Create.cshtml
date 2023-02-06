@@ -23,9 +23,9 @@
                 <span asp-validation-for="Capacity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Characteristics" class="control-label"></label>
-                <input asp-for="Characteristics" class="form-control" />
-                <span asp-validation-for="Characteristics" class="text-danger"></span>
+                <label asp-for="CharacteristicsId" class="control-label"></label>
+                <select asp-for="CharacteristicsId" class="form-control" asp-items="ViewBag.CharacteristicsId"></select>
+                <span asp-validation-for="CharacteristicsId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SeatsTaken" class="control-label"></label>

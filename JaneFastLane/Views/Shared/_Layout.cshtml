@@ -12,6 +12,8 @@
     <!-- Favicons -->
     <link href="~/img/favicon.png" rel="icon">
     <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,11 +55,17 @@
                     @if (User.IsInRole("Administrator"))
                     {
                         <li><a href="/Menu">Меню</a></li>
+                        <li><a href="/Table">Маси</a></li>
                         <li><a href="/Admin/Admin/AdminPanel">Администраторски панел</a></li>
                     }
                     @if (User.IsInRole("Waiter"))
                     {
-                        <li><a href="/Admin/Admin/AdminPanel">Маси</a></li>
+                        <li><a href="/Waiter">Маси</a></li>
+
+                    }
+                    @if (User.IsInRole("Customer"))
+                    {
+                        <li><a href="/Customer/Orders">Предишни поръчки</a></li>
 
                     }
                     <li><a href="/">Начало</a></li>

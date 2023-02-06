@@ -18,7 +18,7 @@ namespace JaneFastLane.Data
 
         public DbSet<JaneFastLane.Models.Table> Table { get; set; }
 
-
+        public DbSet<JaneFastLane.Models.ApplicationUser> ApplicationUser { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ApplicationUser>().HasMany(u => u.TablesWaiter);
